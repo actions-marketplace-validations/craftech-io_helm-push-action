@@ -1,0 +1,32 @@
+# action.yml
+name: 'Helm chart push'
+description: 'Push a chart to a repository, using helm-push plugin.'
+branding:
+  icon: anchor
+  color: yellow
+inputs:
+  helm-chart-repo-name:
+    description: 'Name of the the chart in the repository.'
+    required: true
+  helm-chart-repo-url:
+    description: 'The URL of the helm repository.'
+    required: true
+  chart-dir:
+    description: 'The dir where you have the Chart.yaml and chart logic to push'
+    required: true
+  repo-username:
+    description: 'Username to authenticate to the repository.'
+    required: false
+  repo-password:
+    description: 'Password to authenticate to repository.'
+    required: false
+    
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    CHART_REPO_NAME: ${{ inputs.helm-chart-repo-name }}
+    CHART_REPO_URL: ${{ inputs.helm-chart-repo-url }}
+    CHART_DIR: ${{ inputs.chart-dir }}
+    REPO_USERNAME: ${{ inputs.repo-username }}
+    REPO_PASSWORD: ${{ inputs.repo-password }}
